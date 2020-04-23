@@ -51,7 +51,7 @@ jobs:
     - name: Publish doc 2
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: html/mfplugin
+        local: html/xattrfile
         remote: doc
         host: ${{ secrets.PUB_HOST }}
         username: ${{ secrets.PUB_USERNAME }}

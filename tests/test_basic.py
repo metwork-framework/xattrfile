@@ -34,7 +34,7 @@ class BasicTestCase(TestCase):
         x.tags['key1'] = b'value1'
         x._write_tags()
         y = make_xattrfile(test_data_file_path)
-        self.assertEquals(y.tags['key1'], b'value1')
+        self.assertEqual(y.tags['key1'], b'value1')
 
     def test_03_file_not_found(self):
         errno = 0
@@ -44,8 +44,8 @@ class BasicTestCase(TestCase):
         except IOError as io_excep:
             errno = io_excep.errno
             strerror = io_excep.strerror
-        self.assertEquals(errno, 2)
-        self.assertEquals(strerror, 'No such file or directory')
+        self.assertEqual(errno, 2)
+        self.assertEqual(strerror, 'No such file or directory')
 
     def test_05_write_no_tags(self):
         test_data_file_path = os.path.join(self.test_data_dir_path,
@@ -64,7 +64,7 @@ class BasicTestCase(TestCase):
         x.tags['key1'] = b'value1'
         x.copy(tmp_data_file_path)
         y = make_xattrfile(tmp_data_file_path)
-        self.assertEquals(y.tags['key1'], b'value1')
+        self.assertEqual(y.tags['key1'], b'value1')
         os.unlink(tmp_data_file_path)
 
     def test_07_copy_tags_on(self):
@@ -75,7 +75,7 @@ class BasicTestCase(TestCase):
         x = make_xattrfile(test_data_file_path)
         x.tags['foo'] = b'bar'
         y = x.copy_tags_on(test_data_file2_path)
-        self.assertEquals(y.tags['foo'], b'bar')
+        self.assertEqual(y.tags['foo'], b'bar')
 
     def test_08_rename_file_tags(self):
         test_data_file_path = os.path.join(self.test_data_dir_path,
@@ -90,7 +90,7 @@ class BasicTestCase(TestCase):
         y = make_xattrfile(tmp_data_file_path)
         y.rename(tmp2_data_file_path)
         y = make_xattrfile(tmp2_data_file_path)
-        self.assertEquals(y.tags['key1'], b'value1')
+        self.assertEqual(y.tags['key1'], b'value1')
         os.unlink(tmp2_data_file_path)
 
     def test_09_delete_file(self):
@@ -109,7 +109,7 @@ class BasicTestCase(TestCase):
         test_data_file_path = os.path.join(self.test_data_dir_path,
                                            u'test_file.json')
         x = make_xattrfile(test_data_file_path)
-        self.assertEquals(x.basename(), u'test_file.json')
+        self.assertEqual(x.basename(), u'test_file.json')
 
     def test_11_rename_file_no_tags(self):
         test_data_file_path = os.path.join(self.test_data_dir_path,
@@ -123,7 +123,7 @@ class BasicTestCase(TestCase):
         y = make_xattrfile(tmp_data_file_path)
         y.rename(tmp2_data_file_path)
         y = make_xattrfile(tmp2_data_file_path)
-        self.assertEquals(len(x.tags), 0)
+        self.assertEqual(len(x.tags), 0)
         os.unlink(tmp2_data_file_path)
 
     def test_13_rename_file_path(self):
@@ -137,7 +137,7 @@ class BasicTestCase(TestCase):
         x.copy(tmp_data_file_path)
         y = make_xattrfile(tmp_data_file_path)
         y.rename(tmp2_data_file_path)
-        self.assertEquals(y.filepath, tmp2_data_file_path)
+        self.assertEqual(y.filepath, tmp2_data_file_path)
         os.unlink(tmp2_data_file_path)
 
     def test_14_move_or_copy(self):
@@ -156,7 +156,7 @@ class BasicTestCase(TestCase):
         self.assertTrue(r2)
         self.assertFalse(os.path.isfile(tmp_data_file_path))
         self.assertTrue(os.path.isfile(tmp_data_file_path2))
-        self.assertEquals(make_xattrfile(
+        self.assertEqual(make_xattrfile(
             tmp_data_file_path2).tags['key1'], b'value1')
         make_xattrfile(tmp_data_file_path2).delete()
 
@@ -187,9 +187,9 @@ class BasicTestCase(TestCase):
         self.assertFalse(r2)
         self.assertFalse(os.path.isfile(tmp_data_file_path))
         self.assertTrue(os.path.isfile(tmp_data_file_path2))
-        self.assertEquals(make_xattrfile(
+        self.assertEqual(make_xattrfile(
             tmp_data_file_path2).tags['key1'], b'value1')
-        self.assertEquals(y.tags['key1'], b'value1')
+        self.assertEqual(y.tags['key1'], b'value1')
         make_xattrfile(tmp_data_file_path2).delete()
 
     def test_14_hardlink_or_copy(self):
@@ -208,7 +208,7 @@ class BasicTestCase(TestCase):
         self.assertTrue(r2)
         self.assertTrue(os.path.isfile(tmp_data_file_path))
         self.assertTrue(os.path.isfile(tmp_data_file_path2))
-        self.assertEquals(make_xattrfile(
+        self.assertEqual(make_xattrfile(
             tmp_data_file_path2).tags['key1'], b'value1')
         make_xattrfile(tmp_data_file_path).delete()
         make_xattrfile(tmp_data_file_path2).delete()
@@ -240,7 +240,7 @@ class BasicTestCase(TestCase):
         self.assertFalse(r2)
         self.assertTrue(os.path.isfile(tmp_data_file_path))
         self.assertTrue(os.path.isfile(tmp_data_file_path2))
-        self.assertEquals(make_xattrfile(
+        self.assertEqual(make_xattrfile(
             tmp_data_file_path2).tags['key1'], b'value1')
         make_xattrfile(tmp_data_file_path2).delete()
 
@@ -260,7 +260,7 @@ class BasicTestCase(TestCase):
         self.assertTrue(r2)
         self.assertTrue(os.path.isfile(tmp_data_file_path))
         self.assertTrue(os.path.isfile(tmp_data_file_path2))
-        self.assertEquals(make_xattrfile(
+        self.assertEqual(make_xattrfile(
             tmp_data_file_path2).tags['key1'], b'value1')
         make_xattrfile(tmp_data_file_path2).delete()
         make_xattrfile(tmp_data_file_path).delete()
@@ -273,7 +273,7 @@ class BasicTestCase(TestCase):
         r = x.get_redis_callable()
         r.hset(x._redis_key, 'rick', 'morty')
         x._read_tags()
-        self.assertEquals(x.tags['rick'], b'morty')
+        self.assertEqual(x.tags['rick'], b'morty')
 
     def test_16_delete_redis_empty(self):
         test_data_file_path = os.path.join(self.test_data_dir_path,
@@ -313,7 +313,7 @@ class BasicTestCase(TestCase):
         y.tags[u'unicode'] = u'unicode ééé'
         y.commit()
         y._read_tags()
-        self.assertEquals(y.tags['basic'], b'basic')
-        self.assertEquals(y.tags[b'bytes'], b'bytes')
-        self.assertEquals(y.tags[u'unicode'].decode('utf8'), u'unicode ééé')
+        self.assertEqual(y.tags['basic'], b'basic')
+        self.assertEqual(y.tags[b'bytes'], b'bytes')
+        self.assertEqual(y.tags[u'unicode'].decode('utf8'), u'unicode ééé')
         y.delete()

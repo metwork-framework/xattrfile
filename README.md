@@ -6,7 +6,10 @@
 
 
 
-[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/xattrfile/status.svg)](http://metwork-framework.org:8000/metwork-framework/xattrfile)
+
+
+[![GitHub CI](https://github.com/metwork-framework/xattrfile/workflows/CI/badge.svg)](https://github.com/metwork-framework/xattrfile/actions?query=workflow%3ACI)
+
 [![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
 
 

@@ -8,6 +8,15 @@ import redis
 import hashlib
 import codecs
 
+# PDOC3 configuration
+__pdoc__ = {
+    "set_tag": False,
+    "get_tag": False,
+    "print_tags": False,
+    "unittests_get_redis_callable": False,
+    "metwork_get_redis_callable": False
+}
+
 #: Logger definition
 DEFAULT_LOGGER = logging.getLogger("xattrfile")
 
@@ -60,17 +69,19 @@ class DictWithDirtyFlag(dict):
 
     Example:
 
-        >>> d = DictWithDirtyFlag()
-        >>> d.dirty
-        False
-        >>> d['foo'] = 'bar'
-        >>> d.dirty
-        True
-        >>> # do what you want...
-        >>> d.dirty = False
-        >>> d['foo2'] = 'bar2'
-        >>> d.dirty
-        True
+    ```python
+    >>> d = DictWithDirtyFlag()
+    >>> d.dirty
+    False
+    >>> d['foo'] = 'bar'
+    >>> d.dirty
+    True
+    >>> # do what you want...
+    >>> d.dirty = False
+    >>> d['foo2'] = 'bar2'
+    >>> d.dirty
+    True
+    ```
 
     Attributes:
         dirty (boolean): the dirty flag
@@ -96,14 +107,16 @@ class BytesDictWithDirtyFlag(DictWithDirtyFlag):
 
     Example (in python3):
 
-        >>> d = BytesDictWithDirtyFlag()
-        >>> d['foo'] = 'bar'
-        >>> d.dirty
-        True
-        >>> d['foo']
-        b'bar'
-        >>> d[b'foo']
-        b'bar'
+    ```python
+    >>> d = BytesDictWithDirtyFlag()
+    d['foo'] = 'bar'
+    >>> d.dirty
+    True
+    >>> d['foo']
+    b'bar'
+    >>> d[b'foo']
+    b'bar'
+    ```
 
     """
 
@@ -153,7 +166,7 @@ class XattrFile(object):
 
     Attributes are stored inside the object. They are lazy loaded from redis.
 
-    You can access them through tags attributes as a BytesDictWithDirtyFlag
+    You can access them through tags attributes as a `BytesDictWithDirtyFlag`
     dict. If you made some modifications on theses tags, you can force
     a redis write with commit() method. But main public methods on the
     object do it for you. And there is an automatic destructor to do that
@@ -163,21 +176,7 @@ class XattrFile(object):
     is ok) to avoid incoherences. Please use public methods on the file
     to copy/delete/rename/... it.
 
-    Attributes:
-        filepath (string): name of file.
-        tags: attributes of file (lazy loading).
-        get_redis_callable (callable): a function to get a connected redis
-            instance.
-        redis_timeout(int): redis keys timeout (in seconds)
-
     """
-
-    __tags = None
-    __redis_key_cache = None
-    __filepath = None
-    get_redis_callable = None
-    redis_timeout = None
-    __logger = None
 
     def __init__(self, filepath,
                  get_redis_callable=metwork_get_redis_callable,
@@ -197,8 +196,16 @@ class XattrFile(object):
             IOError: if the given path does not exist or is not a file.
 
         """
+        self.__logger = None
+        self.__filepath = None
+        self.__redis_key_cache = None
+        self.__tags = None
         self.get_redis_callable = get_redis_callable
+        """function to get a connected redispy instance."""
         self.redis_timeout = redis_timeout
+        """lifetime (in seconds) or redis keys (-1 => no timeout), it means
+        that you will loose attributes on a given file after this timeout
+        (if no modification)."""
         if not os.path.exists(filepath):
             raise IOError(2, 'No such file or directory', filepath)
         if not os.path.isfile(filepath):
@@ -216,13 +223,11 @@ class XattrFile(object):
             else:
                 self.commit()
 
-    def set_logger(self, logger):
-        self.__logger = logger
-
     @property
     def logger(self):
+        """a configured logger object (lazy property)."""
         if self.__logger is None:
-            self.set_logger(DEFAULT_LOGGER)
+            self.__logger = DEFAULT_LOGGER
         return self.__logger
 
     def commit(self):
@@ -236,6 +241,8 @@ class XattrFile(object):
 
     @property
     def tags(self):
+        """BytesDictWithDirtyFlag object (can be used as a dict of bytes)
+        containting all tags of the current file."""
         if self.__tags is None:
             self._read_tags()
         return self.__tags
@@ -265,6 +272,7 @@ class XattrFile(object):
 
     @property
     def filepath(self):
+        """The full (absolute) filepath (string) of the file."""
         return self.__filepath
 
     def __set_filepath(self, filepath):

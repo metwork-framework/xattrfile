@@ -8,7 +8,7 @@
 
 
 
-[![GitHub CI](https://github.com/metwork-framework/xattrfile/workflows/CI/badge.svg)](https://github.com/metwork-framework/xattrfile/actions?query=workflow%3ACI)
+[![GitHub CI](https://github.com/metwork-framework/xattrfile/workflows/CI/badge.svg?branch=master)](https://github.com/metwork-framework/xattrfile/actions?query=workflow%3ACI&branch=master)
 
 [![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
 

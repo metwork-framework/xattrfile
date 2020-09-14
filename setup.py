@@ -23,6 +23,7 @@ with open('requirements.txt') as reqs:
 
 setup(
     name='xattrfile',
+    url="https://github.com/metwork-framework/xattrfile",
     packages=find_packages(),
     install_requires=required,
     include_package_data=True,

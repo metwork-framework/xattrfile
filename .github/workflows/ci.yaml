@@ -43,13 +43,13 @@ jobs:
         password: ${{ secrets.PUB_PASSWORD }}
         port: 22
         script: |
-          rm -Rf doc
-          mkdir doc
+          rm -Rf /pub/misc/xattrfile/doc
+          mkdir /pub/misc/xattrfile/doc
     - name: Publish doc 2
       uses: garygrossgarten/github-action-scp@release
       with:
         local: html/xattrfile
-        remote: doc
+        remote: /pub/misc/xattrfile/doc
         host: ${{ secrets.PUB_HOST }}
         username: ${{ secrets.PUB_USERNAME }}
         password: ${{ secrets.PUB_PASSWORD }}
@@ -64,13 +64,13 @@ jobs:
         password: ${{ secrets.PUB_PASSWORD }}
         port: 22
         script: |
-          rm -Rf coverage
-          mkdir coverage
+          rm -Rf /pub/misc/xattrfile/coverage
+          mkdir /pub/misc/xattrfile/coverage
     - name: Publish coverage 2
       uses: garygrossgarten/github-action-scp@release
       with:
         local: htmlcov
-        remote: coverage
+        remote: /pub/misc/xattrfile/coverage
         host: ${{ secrets.PUB_HOST }}
         username: ${{ secrets.PUB_USERNAME }}
         password: ${{ secrets.PUB_PASSWORD }}

@@ -5,3 +5,4 @@ pdoc3
 pytest
 pytest-cov
 six
+setuptools; python_version > '3.11'

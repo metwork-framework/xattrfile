@@ -662,5 +662,5 @@ class XattrFile(object):
                       chmod_mode_int=chmod_mode_int)
             return True
         except Exception:
-            pass
+            self.logger.error("can't copy file to %s: %s", new_filepath, e)
         return False

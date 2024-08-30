@@ -36,10 +36,11 @@ jobs:
       run: |
         make test
     - name: Doc
+      if: matrix.python-version != '3.7'
       run: |
         make doc
     - name: Publish doc 1
-      if: matrix.python-version == '3.7'
+      if: matrix.python-version == '3.8'
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.PUB_HOST }}
@@ -50,7 +51,7 @@ jobs:
           rm -Rf /pub/misc/xattrfile/doc
           mkdir /pub/misc/xattrfile/doc
     - name: Publish doc 2
-      if: matrix.python-version == '3.7'
+      if: matrix.python-version == '3.8'
       uses: garygrossgarten/github-action-scp@release
       with:
         local: html/xattrfile
@@ -59,11 +60,11 @@ jobs:
         username: ${{ secrets.PUB_USERNAME }}
         password: ${{ secrets.PUB_PASSWORD }}
     - name: Coverage
-      if: matrix.python-version == '3.7'
+      if: matrix.python-version == '3.8'
       run: |
         make coverage
     - name: Publish coverage 1
-      if: matrix.python-version == '3.7'
+      if: matrix.python-version == '3.8'
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.PUB_HOST }}
@@ -74,7 +75,7 @@ jobs:
           rm -Rf /pub/misc/xattrfile/coverage
           mkdir /pub/misc/xattrfile/coverage
     - name: Publish coverage 2
-      if: matrix.python-version == '3.7'
+      if: matrix.python-version == '3.8'
       uses: garygrossgarten/github-action-scp@release
       with:
         local: htmlcov

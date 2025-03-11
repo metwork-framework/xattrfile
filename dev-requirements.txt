@@ -1,6 +1,6 @@
 -r requirements.txt
 flake8
-fakeredis-py
+fakeredis
 mock
 pdoc3
 pytest

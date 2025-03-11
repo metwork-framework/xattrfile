@@ -13,6 +13,7 @@ __pdoc__ = {
     "set_tag": False,
     "get_tag": False,
     "print_tags": False,
+    "unittests_get_redis_callable": False,
     "metwork_get_redis_callable": False
 }
 
@@ -27,6 +28,14 @@ UNITTESTS_RED = None
 
 #: MFMODULE_RUNTIME_HOME value
 MFMODULE_RUNTIME_HOME = os.environ.get('MFMODULE_RUNTIME_HOME', None)
+
+
+def unittests_get_redis_callable():
+    global UNITTESTS_RED
+    from mockredis import mock_redis_client
+    if UNITTESTS_RED is None:
+        UNITTESTS_RED = mock_redis_client()
+    return UNITTESTS_RED
 
 
 def metwork_get_redis_callable():

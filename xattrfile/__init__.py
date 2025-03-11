@@ -32,9 +32,9 @@ MFMODULE_RUNTIME_HOME = os.environ.get('MFMODULE_RUNTIME_HOME', None)
 
 def unittests_get_redis_callable():
     global UNITTESTS_RED
-    from mockredis import mock_redis_client
+    import fakeredis
     if UNITTESTS_RED is None:
-        UNITTESTS_RED = mock_redis_client()
+        UNITTESTS_RED = fakeredis.FakeRedis()
     return UNITTESTS_RED
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from mockredis import mock_redis_client
+import fakeredis
 from unittest import TestCase
 from xattrfile import XattrFile
 from functools import partial
@@ -12,7 +12,7 @@ RED = None
 def unittests_get_redis_callable():
     global RED
     if RED is None:
-        RED = mock_redis_client()
+        RED = fakeredis.FakeRedis()
     return RED
 
 

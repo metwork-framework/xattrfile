@@ -315,7 +315,7 @@ class XattrFile(object):
         self.__tags = BytesDictWithDirtyFlag(r.hgetall(self._redis_key))
 
     def copy_tags_on(self, filepath):
-        """Copy current tags to another file and returns corresponding XattrFile.
+        """Copy current tags to another file and return corresponding XattrFile
 
         The destination filepath must exist. If not, use copy() method.
 

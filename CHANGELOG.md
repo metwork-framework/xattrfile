@@ -11,5 +11,6 @@
 ### Bug Fixes
 
 - "Bad processing..." caused by read rights (closes #5) (#6)
+- use fakeredis <= 2.34.1 for Python <= 3.8
 
 
